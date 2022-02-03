@@ -268,11 +268,13 @@ _why_ we'd want to have it.
 
 :question: *1* What is the purpose of `.gitignore`?
 ([Maybe search for `.gitignore`?](https://www.google.com/search?q=.gitignore))
+age
 
 :question: *2* What role is Gradle playing in the
 project, and what is the purpose of `build.gradle`?
 
 :question: *3* What is the purpose of Github Actions?
+Running our website and testing
 
 :question: *4* Explain what an _endpoint_ is (also often called a _route_). (You might look at the
 [Javalin](https://javalin.io/documentation#endpoint-handlers)
