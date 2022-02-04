@@ -14,25 +14,25 @@ import io.javalin.http.BadRequestResponse;
 /**
  * A fake "database" of todos
  */
-public class todosDatabase {
-  private todo[] allTodos;
+public class TodoDatabase {
+  private Todo[] allTodos;
 
-  public todosDatabase(String todoData) throws StreamReadException, DatabindException, IOException {
+  public TodoDatabase(String todoData) throws StreamReadException, DatabindException, IOException {
     InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream(todoData));
     ObjectMapper objectMapper = new ObjectMapper();
-    allTodos = objectMapper.readValue(reader, todo[].class);
+    allTodos = objectMapper.readValue(reader, Todo[].class);
   }
 
   public int size(){
     return allTodos.length;
   }
 
-  public todo getTodo(String id) {
+  public Todo getTodo(String id) {
     return Arrays.stream(allTodos).filter(x -> x._id.equals(id)).findFirst().orElse(null);
   }
 
-  public todo[] listTodos(Map<String, List<String>> queryParams) {
-    todo filteredTodos[] = allTodos;
+  public Todo[] listTodos(Map<String, List<String>> queryParams) {
+    Todo filteredTodos[] = allTodos;
 
     // filter by status if defined
     if (queryParams.containsKey("status")) {
@@ -55,16 +55,16 @@ public class todosDatabase {
     return filteredTodos;
   }
 
-  private todo[] filterTodosByStatus(todo[] todos, Boolean targetStatus) {
-    return Arrays.stream(todos).filter(x -> x.status == targetStatus).toArray(todo[]::new);
+  private Todo[] filterTodosByStatus(Todo[] todos, Boolean targetStatus) {
+    return Arrays.stream(todos).filter(x -> x.status == targetStatus).toArray(Todo[]::new);
   }
 
-  public todo[] filterTodosByOwner(todo[] todos, String targetOwner) {
-    return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(todo[]::new);
+  public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
+    return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
   }
 
-  public todo[] filterTodosByCategory(todo[] todos, String targetCategory) {
-    return Arrays.stream(todos).filter(x -> x.category.equals(targetCategory)).toArray(todo[]::new);
+  public Todo[] filterTodosByCategory(Todo[] todos, String targetCategory) {
+    return Arrays.stream(todos).filter(x -> x.category.equals(targetCategory)).toArray(Todo[]::new);
   }
 
 
