@@ -33,7 +33,7 @@ public class TodoDatabase {
   }
 
   public Todo[] listTodos(Map<String, List<String>> queryParams) {
-    Todo filteredTodos[] = allTodos;
+    Todo[] filteredTodos = allTodos;
 
     // filter by status if defined
     if (queryParams.containsKey("status")) {
@@ -102,6 +102,8 @@ public class TodoDatabase {
           }
         });
         break;
+        default:
+        return todos;
     }
 
     return todos;
