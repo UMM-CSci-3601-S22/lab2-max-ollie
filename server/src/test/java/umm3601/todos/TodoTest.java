@@ -17,7 +17,7 @@ public class TodoTest {
   }
 
   @Test
-  public void getStokesClayton() throws IOException {
+  public void get58895985f13555dedae2cf6f() throws IOException {
     TodoDatabase db = new TodoDatabase("/todos.json");
     Todo td = db.getTodo("58895985f13555dedae2cf6f");
     assertEquals("Workman", td.owner, "Incorrect owner");
