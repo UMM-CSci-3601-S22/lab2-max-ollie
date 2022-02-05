@@ -15,7 +15,7 @@ public class Server {
   private static final int PORT_NUMBER = 4567;
   public static final String CLIENT_DIRECTORY = "../client";
   public static final String USER_DATA_FILE = "/users.json";
-  public static final String Todo_DATA_FILE = "/todos.json";
+  public static final String TODO_DATA_FILE = "/todos.json";
   private static UserDatabase userDatabase;
   private static TodoDatabase todoDatabase;
 
@@ -80,10 +80,10 @@ public class Server {
   }
 
   private static TodoController buildTodoController() {
-    TodoController TodoController = null;
+    TodoController todoController = null;
     try {
-      todoDatabase = new TodoDatabase(Todo_DATA_FILE);
-      TodoController = new TodoController(todoDatabase);
+      todoDatabase = new TodoDatabase(TODO_DATA_FILE);
+      todoController = new TodoController(todoDatabase);
     } catch (IOException e) {
       System.err.println("The server failed to load the Todo data; shutting down.");
       e.printStackTrace(System.err);
@@ -92,6 +92,6 @@ public class Server {
       System.exit(1);
     }
 
-    return TodoController;
+    return todoController;
   }
 }

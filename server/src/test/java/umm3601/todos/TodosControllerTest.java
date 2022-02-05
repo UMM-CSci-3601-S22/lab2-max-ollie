@@ -7,7 +7,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +35,7 @@ public class TodosControllerTest {
   public void setUp() throws IOException {
     ctx.clearCookieStore();
 
-    db = new TodoDatabase(Server.Todo_DATA_FILE);
+    db = new TodoDatabase(Server.TODO_DATA_FILE);
     TodoController = new TodoController(db);
   }
 
@@ -134,6 +133,7 @@ public class TodosControllerTest {
       assertEquals("homework", todo.category);
     }
   }
+
   @Test
   public void canGetTodosWithContains() throws IOException {
     // Add a query param map to the context that maps "contains" to "cillum"
@@ -153,6 +153,7 @@ public class TodosControllerTest {
       assertTrue(todo.body.contains("cillum"));
     }
   }
+
   @Test
   public void canGetLimitedTodos() throws IOException {
     Map<String, List<String>> queryParams = new HashMap<>();
@@ -164,11 +165,12 @@ public class TodosControllerTest {
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
     verify(ctx).json(argument.capture());
     int b = 0;
-    for(Todo todo: argument.getValue()) {
+    for (Todo todo : argument.getValue()) {
       b++;
     }
     assertEquals(7, b);
   }
+
   @Test
   public void canFailBadLimitedTodos() throws IOException {
     Map<String, List<String>> queryParams = new HashMap<>();
@@ -178,6 +180,7 @@ public class TodosControllerTest {
       TodoController.getTodos(ctx);
     });
   }
+
   @Test
   public void canGetTodosAlphabeticallyByOwner() throws IOException {
     Map<String, List<String>> queryParams = new HashMap<>();
@@ -191,10 +194,11 @@ public class TodosControllerTest {
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
     verify(ctx).json(argument.capture());
     Todo[] a = argument.getValue();
-    for(int i = 0; i <a.length-1;i++){
-      assertTrue(a[i].owner.compareTo(a[i+1].owner)<=0);
+    for (int i = 0; i < a.length - 1; i++) {
+      assertTrue(a[i].owner.compareTo(a[i + 1].owner) <= 0);
     }
   }
+
   @Test
   public void canGetTodosAlphabeticallyByBody() throws IOException {
     Map<String, List<String>> queryParams = new HashMap<>();
@@ -208,10 +212,11 @@ public class TodosControllerTest {
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
     verify(ctx).json(argument.capture());
     Todo[] a = argument.getValue();
-    for(int i = 0; i <a.length-1;i++){
-      assertTrue(a[i].body.compareTo(a[i+1].body)<=0);
+    for (int i = 0; i < a.length - 1; i++) {
+      assertTrue(a[i].body.compareTo(a[i + 1].body) <= 0);
     }
   }
+
   @Test
   public void canGetTodosAlphabeticallyByCategory() throws IOException {
     Map<String, List<String>> queryParams = new HashMap<>();
@@ -225,10 +230,11 @@ public class TodosControllerTest {
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
     verify(ctx).json(argument.capture());
     Todo[] a = argument.getValue();
-    for(int i = 0; i <a.length-1;i++){
-      assertTrue(a[i].category.compareTo(a[i+1].category)<=0);
+    for (int i = 0; i < a.length - 1; i++) {
+      assertTrue(a[i].category.compareTo(a[i + 1].category) <= 0);
     }
   }
+
   @Test
   public void canGetTodosAlphabeticallyByStatus() throws IOException {
     Map<String, List<String>> queryParams = new HashMap<>();
@@ -242,8 +248,8 @@ public class TodosControllerTest {
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
     verify(ctx).json(argument.capture());
     Todo[] a = argument.getValue();
-    for(int i = 0; i <a.length-1;i++){
-      assertTrue(Boolean.compare(a[i].status,a[i+1].status)<=0);
+    for (int i = 0; i < a.length - 1; i++) {
+      assertTrue(Boolean.compare(a[i].status, a[i + 1].status) <= 0);
     }
   }
 }
