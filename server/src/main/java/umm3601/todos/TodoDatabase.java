@@ -22,6 +22,7 @@ public class TodoDatabase {
     InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream(todoData));
     ObjectMapper objectMapper = new ObjectMapper();
     allTodos = objectMapper.readValue(reader, Todo[].class);
+    reader.close();
   }
 
   public int size() {
