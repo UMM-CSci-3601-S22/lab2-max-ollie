@@ -24,6 +24,7 @@ import io.javalin.http.NotFoundResponse;
 
 import umm3601.Server;
 
+@SuppressWarnings({ "MagicNumber", "NoWhiteSpaceAfter"})
 public class TodosControllerTest {
 
   private Context ctx = mock(Context.class);
