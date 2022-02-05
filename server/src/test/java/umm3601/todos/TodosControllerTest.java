@@ -29,7 +29,7 @@ public class TodosControllerTest {
 
   private Context ctx = mock(Context.class);
 
-  private TodoController TodoController;
+  private TodoController todoController;
   private static TodoDatabase db;
 
   @BeforeEach
@@ -37,7 +37,7 @@ public class TodosControllerTest {
     ctx.clearCookieStore();
 
     db = new TodoDatabase(Server.TODO_DATA_FILE);
-    TodoController = new TodoController(db);
+    todoController = new TodoController(db);
   }
 
   /**
@@ -47,7 +47,7 @@ public class TodosControllerTest {
    */
   @Test
   public void canGetAllTodos() throws IOException {
-    TodoController.getTodos(ctx);
+    todoController.getTodos(ctx);
 
     // Confirm that `json` was called with all the Todos.
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
@@ -66,7 +66,7 @@ public class TodosControllerTest {
     // Call the method on the mock controller with the added
     // query param map to limit the result to just todos with
     // owner Barry.
-    TodoController.getTodos(ctx);
+    todoController.getTodos(ctx);
 
     // Confirm that all the todos passed to `json` have owner Barry.
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
@@ -91,7 +91,7 @@ public class TodosControllerTest {
     // This should now throw a `BadRequestResponse` exception because
     // our request has a status that can't be parsed
     Assertions.assertThrows(BadRequestResponse.class, () -> {
-      TodoController.getTodos(ctx);
+      todoController.getTodos(ctx);
     });
   }
 
@@ -99,7 +99,7 @@ public class TodosControllerTest {
   public void respondsAppropriatelyToRequestForNonexistentId() throws IOException {
     when(ctx.pathParam("id")).thenReturn(null);
     Assertions.assertThrows(NotFoundResponse.class, () -> {
-      TodoController.getTodo(ctx);
+      todoController.getTodo(ctx);
     });
   }
 
@@ -110,7 +110,7 @@ public class TodosControllerTest {
 
     when(ctx.pathParam("id")).thenReturn(id);
 
-    TodoController.getTodo(ctx);
+    todoController.getTodo(ctx);
 
     verify(ctx).json(todo);
     verify(ctx).status(HttpCode.OK);
@@ -123,7 +123,7 @@ public class TodosControllerTest {
     queryParams.put("status", Arrays.asList(new String[] { "true" }));
     when(ctx.queryParamMap()).thenReturn(queryParams);
 
-    TodoController.getTodos(ctx);
+    todoController.getTodos(ctx);
 
     // Confirm that all the todos passed to `json` are homework
     // and have status true.
@@ -145,7 +145,7 @@ public class TodosControllerTest {
     // Call the method on the mock controller with the added
     // query param map to limit the result to just todos with
     // cillum in body.
-    TodoController.getTodos(ctx);
+    todoController.getTodos(ctx);
 
     // Confirm that all the todos passed to `json` have cillum in body.
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
@@ -160,7 +160,7 @@ public class TodosControllerTest {
     Map<String, List<String>> queryParams = new HashMap<>();
     queryParams.put("limit", Arrays.asList(new String[] { "7" }));
     when(ctx.queryParamMap()).thenReturn(queryParams);
-    TodoController.getTodos(ctx);
+    todoController.getTodos(ctx);
 
     // Confirm that `json` was called with all the Todos.
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
@@ -178,7 +178,7 @@ public class TodosControllerTest {
     queryParams.put("limit", Arrays.asList(new String[] { "jump" }));
     when(ctx.queryParamMap()).thenReturn(queryParams);
     Assertions.assertThrows(BadRequestResponse.class, () -> {
-      TodoController.getTodos(ctx);
+      todoController.getTodos(ctx);
     });
   }
 
@@ -189,7 +189,7 @@ public class TodosControllerTest {
 
     when(ctx.queryParamMap()).thenReturn(queryParams);
 
-    TodoController.getTodos(ctx);
+    todoController.getTodos(ctx);
 
     // Confirm that all the todos passed to `json` are ordered by Owner
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
@@ -207,7 +207,7 @@ public class TodosControllerTest {
 
     when(ctx.queryParamMap()).thenReturn(queryParams);
 
-    TodoController.getTodos(ctx);
+    todoController.getTodos(ctx);
 
     // Confirm that all the todos passed to `json` are ordered by Body
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
@@ -225,7 +225,7 @@ public class TodosControllerTest {
 
     when(ctx.queryParamMap()).thenReturn(queryParams);
 
-    TodoController.getTodos(ctx);
+    todoController.getTodos(ctx);
 
     // Confirm that all the todos passed to `json` are ordered by Category
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
@@ -243,7 +243,7 @@ public class TodosControllerTest {
 
     when(ctx.queryParamMap()).thenReturn(queryParams);
 
-    TodoController.getTodos(ctx);
+    todoController.getTodos(ctx);
 
     // Confirm that all the todos passed to `json` are ordered by Status
     ArgumentCaptor<Todo[]> argument = ArgumentCaptor.forClass(Todo[].class);
